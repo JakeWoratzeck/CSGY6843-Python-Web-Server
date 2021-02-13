@@ -15,7 +15,7 @@ def webServer(port=13331):
    while True:
        #Establish the connection
        #Is this breaking Gradescope? I saw this on the Slack...
-       print('Ready to serve...')
+       #print('Ready to serve...')
        connectionSocket, addr = serverSocket.accept()#Fill in start      #Fill in end
        try:
            message = connectionSocket.recv(1024)#Fill in start    #Fill in end
