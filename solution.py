@@ -16,7 +16,7 @@ def webServer(port=13331):
    while True:
        #Establish the connection
        #Is this breaking Gradescope? I saw this on the Slack...
-       #print('Ready to serve...')
+       print('Ready to serve...')
        connectionSocket, addr = serverSocket.accept()#Fill in start      #Fill in end
        try:
             message = connectionSocket.recv(1024)#Fill in start    #Fill in end
@@ -36,13 +36,10 @@ def webServer(port=13331):
 
             #Send the content of the requested file to the client
             
-            for i in range(0, len(outputdata)):
-                if not message:
-                    break
-                else:
-                    connectionSocket.send(outputdata[i].encode())
+            #for i in range(0, len(outputdata)):
+            connectionSocket.send((outputdata+"\r\n").encode())
             
-            connectionSocket.send("\r\n\r\n".encode())
+            #connectionSocket.send("\r\n\r\n".encode())
             connectionSocket.close()
             
        except IOError:
@@ -50,10 +47,7 @@ def webServer(port=13331):
            #Fill in start
            #send a 404 if the connection did NOT work
            #If the connection is already closed, don't try to send anything else
-            if not message:
-                break
-            else:
-                connectionSocket.send(('HTTP/1.1 404 Not Found\r\n\r\n').encode())
+            connectionSocket.send(('HTTP/1.1 404 Not Found\r\n\r\n').encode())
             #connectionSocket.send(bytes("404 Not Found", "UTF-8"))
             #Fill in end
 
