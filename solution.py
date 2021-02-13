@@ -19,26 +19,29 @@ def webServer(port=13331):
        connectionSocket, addr = serverSocket.accept()#Fill in start      #Fill in end
        try:
            message = connectionSocket.recv(1024)#Fill in start    #Fill in end
-           filename = message.split()[1]
-           f = open(filename[1:])
-           outputdata = f.read()#Fill in start     #Fill in end
-
-           #Send one HTTP header line into socket
-           #Fill in start
-           #Send a 200 OK if the connection worked
-           #Check if connection is closed before sending anything
+           
            if not message:
                 break
-           connectionSocket.send(bytes('HTTP/1.1 200 OK\r\n\r\n', 'UTF-8'))
-           
-           #Fill in end
+           else:
+                filename = message.split()[1]
+                f = open(filename[1:])
+                outputdata = f.read()#Fill in start     #Fill in end
 
-           #Send the content of the requested file to the client
-           for i in range(0, len(outputdata)):
-               connectionSocket.send(outputdata[i].encode())
+                #Send one HTTP header line into socket
+                #Fill in start
+                #Send a 200 OK if the connection worked
+                #Check if connection is closed before sending anything
+                
+                connectionSocket.send(bytes('HTTP/1.1 200 OK\r\n\r\n', 'UTF-8'))
+                
+                #Fill in end
 
-           connectionSocket.send("\r\n".encode())
-           connectionSocket.close()
+                #Send the content of the requested file to the client
+                for i in range(0, len(outputdata)):
+                    connectionSocket.send(outputdata[i].encode())
+
+                connectionSocket.send("\r\n".encode())
+                connectionSocket.close()
        except IOError:
            #Send response message for file not found (404)
            #Fill in start
@@ -46,16 +49,16 @@ def webServer(port=13331):
            #If the connection is already closed, don't try to send anything else
             if not message:
                 break
+            else:
+                connectionSocket.send(bytes("HTTP/1.1 404 Not Found\r\n\r\n", "UTF-8"))
+                #connectionSocket.send(bytes("404 Not Found", "UTF-8"))
+                #Fill in end
 
-            connectionSocket.send(bytes("HTTP/1.1 404 Not Found\r\n\r\n", "UTF-8"))
-            #connectionSocket.send(bytes("404 Not Found", "UTF-8"))
-           #Fill in end
-
-           #Close client socket
-           #Fill in start
-            connectionSocket.close()
-            
-           #Fill in end
+                #Close client socket
+                #Fill in start
+                connectionSocket.close()
+                
+                #  Fill in end
 
    serverSocket.close()
    sys.exit()  # Terminate the program after sending the corresponding data
