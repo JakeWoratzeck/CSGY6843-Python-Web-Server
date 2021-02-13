@@ -10,9 +10,10 @@ def webServer(port=13331):
    #Fill in start
    serverSocket.bind(('127.0.0.1', port))
    serverSocket.listen(1)
+   connection = True
    #Fill in end
 
-   while True:
+   while connection:
        #Establish the connection
        #Is this breaking Gradescope? I saw this on the Slack...
        #print('Ready to serve...')
@@ -43,6 +44,7 @@ def webServer(port=13331):
 
             connectionSocket.send("\r\n".encode())
             connectionSocket.close()
+            connection= False
        except IOError:
            #Send response message for file not found (404)
            #Fill in start
@@ -58,6 +60,7 @@ def webServer(port=13331):
             #Close client socket
             #Fill in start
             connectionSocket.close()
+            connection = False
             
             #  Fill in end
 
