@@ -26,6 +26,9 @@ def webServer(port=13331):
            #Send one HTTP header line into socket
            #Fill in start
            #Send a 200 OK if the connection worked
+           #Check if connection is closed before sending anything
+           if not message:
+                break
            connectionSocket.send(bytes('HTTP/1.1 200 OK\r\n\r\n', 'UTF-8'))
            
            #Fill in end
