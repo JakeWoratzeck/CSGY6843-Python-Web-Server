@@ -38,7 +38,8 @@ def webServer(port=13331):
             for i in range(0, len(outputdata)):
                 if not message:
                     break
-                connectionSocket.send(outputdata[i].encode())
+                else:
+                    connectionSocket.send(outputdata[i].encode())
 
             connectionSocket.send("\r\n".encode())
             connectionSocket.close()
