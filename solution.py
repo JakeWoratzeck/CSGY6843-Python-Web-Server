@@ -40,7 +40,10 @@ def webServer(port=13331):
            #Send response message for file not found (404)
            #Fill in start
            #send a 404 if the connection did NOT work
-        
+           #If the connection is already closed, don't try to send anything else
+            if not message:
+                break
+
             connectionSocket.send(bytes("HTTP/1.1 404 Not Found\r\n\r\n", "UTF-8"))
             #connectionSocket.send(bytes("404 Not Found", "UTF-8"))
            #Fill in end
@@ -48,7 +51,7 @@ def webServer(port=13331):
            #Close client socket
            #Fill in start
             connectionSocket.close()
-            pass
+            
            #Fill in end
 
    serverSocket.close()
