@@ -30,7 +30,7 @@ def webServer(port=13331):
             #Send a 200 OK if the connection worked
             #Check if connection is closed before sending anything
             
-            connectionSocket.send(bytes('HTTP/1.1 200 OK\r\n\r\n', 'UTF-8'))
+            connectionSocket.send(('HTTP/1.1 200 OK\r\n\r\n').encode())
             
             #Fill in end
 
@@ -41,10 +41,8 @@ def webServer(port=13331):
                     break
                 else:
                     connectionSocket.send(outputdata[i].encode())
-            if not message:
-                break
-            else:
-                connectionSocket.send("\r\n".encode())
+            
+            connectionSocket.send("\r\n\r\n".encode())
             connectionSocket.close()
             connection=False
        except IOError:
@@ -55,7 +53,7 @@ def webServer(port=13331):
             if not message:
                 break
             else:
-                connectionSocket.send(bytes("HTTP/1.1 404 Not Found\r\n\r\n", "UTF-8"))
+                connectionSocket.send(('HTTP/1.1 404 Not Found\r\n\r\n').encode())
             #connectionSocket.send(bytes("404 Not Found", "UTF-8"))
             #Fill in end
 
