@@ -40,6 +40,7 @@ def webServer(port=13331):
            #Fill in start
            #send a 404 if the connection did NOT work
             connectionSocket.send(bytes("HTTP/1.1 404 Not Found\r\n\r\n", "UTF-8"))
+            connectionSocket.send(bytes("404 Not Found", "UTF-8"))
            #Fill in end
 
            #Close client socket
